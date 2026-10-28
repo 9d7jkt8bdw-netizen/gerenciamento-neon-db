@@ -1,0 +1,15 @@
+/* 7. FORMULÁRIOS com validação visual */
+.form { display: grid; gap: var(--space-3); background: var(--color-white); padding: var(--space-4);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
+.form__group { display: flex; flex-direction: column; gap: 6px; }
+.form__label { font-weight: 600; font-size: var(--fs-sm); }
+.form__control { padding: 12px var(--space-2); font: inherit; border: 2px solid var(--color-gray-200);
+  border-radius: var(--radius); background: var(--color-white); transition: var(--transition); }
+.form__control:hover { border-color: var(--color-gray-600); }
+.form__control:focus { outline: none; border-color: var(--color-secondary); box-shadow: 0 0 0 3px rgba(43,95,168,.2); }
+.form__control:disabled { background: var(--color-gray-50); cursor: not-allowed; }
+.form__control.is-invalid { border-color: var(--color-danger); }
+.form__control.is-valid { border-color: var(--color-success); }
+.form__error { display: none; color: var(--color-danger); font-size: var(--fs-sm); }
+.form__control.is-invalid ~ .form__error { display: block; }
+.form__hint { font-size: var(--fs-xs); color: var(--color-gray-600); }

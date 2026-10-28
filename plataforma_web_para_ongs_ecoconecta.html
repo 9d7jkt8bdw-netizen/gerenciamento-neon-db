@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma EcoConecta | Conectando Causas e Voluntários</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ==========================================================================
+           1. DESIGN SYSTEM - VARIÁVEIS CSS MODULARES (:root)
+           ========================================================================== */
+        :root {
+            /* Paleta de Cores (10+ Cores) */
+            --color-primary-100: #e6f4ea;
+            --color-primary-300: #81c995;
+            --color-primary-500: #2e7d32; /* Cor Primária */
+            --color-primary-700: #1b5e20;
+            
+            --color-secondary-100: #e3f2fd;
+            --color-secondary-500: #0288d1; /* Cor Secundária */
+            --color-secondary-700: #01579b;
+            
+            --color-accent-500: #ff8f00; /* Destaque/Acento */
+            
+            --color-neutral-000: #ffffff;
+            --color-neutral-100: #f8f9fa;
+            --color-neutral-200: #e9ecef;
+            --color-neutral-400: #ced4da;
+            --color-neutral-600: #6c757d;
+            --color-neutral-800: #343a40;
+            --color-neutral-900: #212529;
+
+            /* Cores de Estado e Feedback */
+            --color-success: #2e7d32;
+            --color-warning: #ed6c02;
+            --color-error: #d32f2f;
+            --color-info: #0288d1;
+
+            /* Tipografia Hierárquica */
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-size-xs: 0.75rem;   /* 12px */
+            --font-size-sm: 0.875rem;  /* 14px */
+            --font-size-md: 1rem;      /* 16px - Body */
+            --font-size-lg: 1.25rem;   /* 20px - H4 */
+            --font-size-xl: 1.5rem;    /* 24px - H3 */
+            --font-size-2xl: 2rem;     /* 32px - H2 */
+            --font-size-3xl: 2.75rem;  /* 44px - H1 */
+
+            --font-weight-regular: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+
+            /* Sistema de Espaçamento Modular (8px, 16px, 24px, 32px, 48px, 64px) */
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 32px;
+            --space-xl: 48px;
+            --space-2xl: 64px;
+
+            /* Sombras, Bordas e Transições */
+            --border-radius-sm: 6px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 20px;
+            --border-radius-full: 9999px;
+
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.12);
+
+            --transition-fast: all 0.2s ease-in-out;
+            --transition-normal: all 0.3s ease-in-out;
+        }
+
+        /* ==========================================================================
+           2. RESET E ESTILOS BASE
+           ========================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-size: var(--font-size-md);
+            color: var(--color-neutral-800);
+            background-color: var(--color-neutral-100);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--color-neutral-900);
+            font-weight: var(--font-weight-bold);
+            line-height: 1.2;
+        }
+
+        h1 { font-size: var(--font-size-3xl); }
+        h2 { font-size: var(--font-size-2xl); }
+        h3 { font-size: var(--font-size-xl); }
+        h4 { font-size: var(--font-size-lg); }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-fast);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        ul { list-style: none; }
+
+        /* Container Padrão */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-sm);
+        }
+
+        /* ==========================================================================
+           3. SISTEMA DE GRID CUSTOMIZADO (12 COLUNAS) & LAYOUT PRINCIPAL
+           ========================================================================== */
+        .grid-12 {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: var(--space-md);
+        }
+
+        /* Utilitários de Colunas */
+        .col-12 { grid-column: span 12; }
+        .col-8  { grid-column: span 8; }
+        .col-6  { grid-column: span 6; }
+        .col-4  { grid-column: span 4; }
+        .col-3  { grid-column: span 3; }
+
+        /* ==========================================================================
+           4. CABEÇALHO E NAVEGAÇÃO
+           ========================================================================== */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: var(--shadow-sm);
+            border-bottom: 1px solid var(--color-neutral-200);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary-500);
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: var(--color-primary-500);
+        }
+
+        /* Menu Principal e Dropdown */
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            font-weight: var(--font-weight-medium);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--border-radius-sm);
+            color: var(--color-neutral-800);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-link:hover, .nav-link:focus {
+            color: var(--color-primary-500);
+            background-color: var(--color-primary-100);
+        }
+
+        /* Submenu Dropdown */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 220px;
+            background-color: var(--color-neutral-000);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--color-neutral-200);
+            padding: var(--space-xs) 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition-fast);
+        }
+
+        .nav-item:hover .dropdown-menu,
+        .nav-item:focus-within .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-link {
+            display: block;
+            padding: var(--space-xs) var(--space-sm);
+            color: var(--color-neutral-800);
+            font-size: var(--font-size-sm);
+        }
+
+        .dropdown-link:hover {
+            background-color: var(--color-neutral-100);
+            color: var(--color-primary-500);
+        }
+
+        /* Menu Hambúrguer (Mobile) */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--color-neutral-900);
+            padding: var(--space-xs);
+        }
+
+        /* ==========================================================================
+           5. BOTÕES COM ESTADOS VISUAIS
+           ========================================================================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-xs);
+            padding: 12px 24px;
+            font-size: var(--font-size-md);
+            font-weight: var(--font-weight-semibold);
+            border-radius: var(--border-radius-sm);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            outline: none;
+            text-align: center;
+        }
+
+        /* Variantes de Botão */
+        .btn-primary {
+            background-color: var(--color-primary-500);
+            color: var(--color-neutral-000);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-primary-700);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:focus {
+            box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border-color: var(--color-primary-500);
+            color: var(--color-primary-500);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--color-primary-100);
+        }
+
+        .btn-secondary:focus {
+            box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.2);
+        }
+
+        .btn-accent {
+            background-color: var(--color-accent-500);
+            color: var(--color-neutral-000);
+        }
+
+        .btn-accent:hover {
+            background-color: #e68000;
+        }
+
+        .btn:disabled, .btn.disabled {
+            background-color: var(--color-neutral-400);
+            border-color: var(--color-neutral-400);
+            color: var(--color-neutral-600);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* ==========================================================================
+           6. HERO SECTION
+           ========================================================================== */
+        .hero {
+            padding: var(--space-2xl) 0;
+            background: linear-gradient(135deg, var(--color-primary-100) 0%, #ffffff 100%);
+            border-bottom: 1px solid var(--color-neutral-200);
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: var(--space-md);
+        }
+
+        .hero-title {
+            color: var(--color-primary-700);
+            font-size: clamp(2rem, 4vw, var(--font-size-3xl));
+        }
+
+        .hero-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--color-neutral-600);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+
+        .hero-image {
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ==========================================================================
+           7. BADGES E TAGS
+           ========================================================================== */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-semibold);
+            border-radius: var(--border-radius-full);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-primary { background-color: var(--color-primary-100); color: var(--color-primary-700); }
+        .badge-secondary { background-color: var(--color-secondary-100); color: var(--color-secondary-700); }
+        .badge-accent { background-color: #fff3e0; color: var(--color-accent-500); }
+
+        /* ==========================================================================
+           8. CARDS DE PROJETOS E RECURSOS
+           ========================================================================== */
+        .section-title {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .section-title h2 {
+            position: relative;
+            display: inline-block;
+            margin-bottom: var(--space-xs);
+        }
+
+        .section-title p {
+            color: var(--color-neutral-600);
+        }
+
+        .card {
+            background-color: var(--color-neutral-000);
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-normal);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--color-neutral-200);
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-img {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-normal);
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.05);
+        }
+
+        .card-tag {
+            position: absolute;
+            top: var(--space-sm);
+            right: var(--space-sm);
+        }
+
+        .card-body {
+            padding: var(--space-md);
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            gap: var(--space-sm);
+        }
+
+        .card-title {
+            font-size: var(--font-size-lg);
+        }
+
+        .card-description {
+            font-size: var(--font-size-sm);
+            color: var(--color-neutral-600);
+            flex-grow: 1;
+        }
+
+        /* Barra de Progresso de Arrecadação */
+        .progress-container {
+            margin-top: var(--space-xs);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: 4px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--color-neutral-200);
+            border-radius: var(--border-radius-full);
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--color-primary-500);
+            border-radius: var(--border-radius-full);
+        }
+
+        /* ==========================================================================
+           9. SESSÃO DE MÉTRICAS E IMPACTO
+           ========================================================================== */
+        .metrics-section {
+            background-color: var(--color-primary-700);
+            color: var(--color-neutral-000);
+            padding: var(--space-2xl) 0;
+            margin: var(--space-2xl) 0;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: var(--space-md);
+        }
+
+        .metric-number {
+            font-size: 3rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-accent-500);
+        }
+
+        .metric-label {
+            font-size: var(--font-size-md);
+            color: var(--color-neutral-200);
+        }
+
+        /* ==========================================================================
+           10. FORMULÁRIOS COM VALIDAÇÃO VISUAL
+           ========================================================================== */
+        .form-section {
+            background-color: var(--color-neutral-000);
+            padding: var(--space-xl);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--color-neutral-200);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: var(--space-sm);
+        }
+
+        .form-label {
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-800);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px var(--space-sm);
+            font-size: var(--font-size-md);
+            font-family: var(--font-family);
+            border: 2px solid var(--color-neutral-400);
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition-fast);
+            outline: none;
+        }
+
+        /* Estados de Validação Visual */
+        .form-control:focus {
+            border-color: var(--color-secondary-500);
+            box-shadow: 0 0 0 3px rgba(2, 136, 209, 0.15);
+        }
+
+        .form-control.valid {
+            border-color: var(--color-success);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232e7d32' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 18px;
+        }
+
+        .form-control.invalid {
+            border-color: var(--color-error);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23d32f2f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 18px;
+        }
+
+        .error-message {
+            font-size: var(--font-size-xs);
+            color: var(--color-error);
+            display: none;
+        }
+
+        .form-control.invalid + .error-message {
+            display: block;
+        }
+
+        /* ==========================================================================
+           11. COMPONENTES DE FEEDBACK (ALERTS, TOASTS E MODAL)
+           ========================================================================== */
+        /* Alerts */
+        .alert {
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--border-radius-sm);
+            margin-bottom: var(--space-md);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: var(--font-size-sm);
+        }
+
+        .alert-success { background-color: var(--color-primary-100); color: var(--color-primary-700); border: 1px solid var(--color-primary-300); }
+        .alert-warning { background-color: #fff3e0; color: #b78103; border: 1px solid #ffe0b2; }
+        .alert-error   { background-color: #ffebee; color: var(--color-error); border: 1px solid #ffcdd2; }
+
+        /* Modal Interativo */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-fast);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background-color: var(--color-neutral-000);
+            width: 90%;
+            max-width: 500px;
+            border-radius: var(--border-radius-md);
+            padding: var(--space-md);
+            box-shadow: var(--shadow-lg);
+            transform: scale(0.9);
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-sm);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: var(--color-neutral-600);
+        }
+
+        /* Toast Container */
+        .toast-container {
+            position: fixed;
+            bottom: var(--space-md);
+            right: var(--space-md);
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+
+        .toast {
+            background-color: var(--color-neutral-900);
+            color: var(--color-neutral-000);
+            padding: 12px 20px;
+            border-radius: var(--border-radius-sm);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* ==========================================================================
+           12. RODAPÉ (FOOTER)
+           ========================================================================== */
+        .footer {
+            background-color: var(--color-neutral-900);
+            color: var(--color-neutral-400);
+            padding: var(--space-2xl) 0 var(--space-md) 0;
+            margin-top: var(--space-2xl);
+        }
+
+        .footer-title {
+            color: var(--color-neutral-000);
+            margin-bottom: var(--space-sm);
+        }
+
+        .footer-links li {
+            margin-bottom: var(--space-xs);
+        }
+
+        .footer-links a:hover {
+            color: var(--color-primary-300);
+        }
+
+        .footer-bottom {
+            margin-top: var(--space-xl);
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--color-neutral-800);
+            text-align: center;
+            font-size: var(--font-size-xs);
+        }
+
+        /* ==========================================================================
+           13. BREAKPOINTS RESPONSIVOS (5 PONTOS DE QUEBRA)
+           ========================================================================== */
+
+        /* 1. Ultra-Wide (> 1400px) */
+        @media (min-width: 1400px) {
+            .container { max-width: 1320px; }
+        }
+
+        /* 2. Desktop Grande / Padrão (<= 1200px) */
+        @media (max-width: 1200px) {
+            .col-3 { grid-column: span 6; }
+        }
+
+        /* 3. Tablet e Desktop Pequeno (<= 992px) */
+        @media (max-width: 992px) {
+            .col-8, .col-6 { grid-column: span 12; }
+            .hero { padding: var(--space-xl) 0; }
+            .hero-title { font-size: 2.25rem; }
+        }
+
+        /* 4. Mobile Landscape / Tablet Pequeno (<= 768px) */
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            
+            .nav-menu {
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--color-neutral-000);
+                flex-direction: column;
+                padding: var(--space-md);
+                box-shadow: var(--shadow-md);
+                display: none; /* Toggle pelo JS */
+            }
+
+            .nav-menu.active { display: flex; }
+
+            .nav-item { width: 100%; }
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                width: 100%;
+                box-shadow: none;
+                border: none;
+                padding-left: var(--space-md);
+            }
+
+            .col-4, .col-3 { grid-column: span 12; }
+            .grid-12 { gap: var(--space-sm); }
+        }
+
+        /* 5. Mobile Portrait (<= 480px) */
+        @media (max-width: 480px) {
+            :root {
+                --font-size-3xl: 2rem;
+                --font-size-2xl: 1.5rem;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .metric-number { font-size: 2.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABEÇALHO E NAVEGAÇÃO -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-leaf"></i>
+                <span>EcoConecta</span>
+            </a>
+
+            <!-- Menu Hambúrguer (Mobile) -->
+            <button class="hamburger" id="hamburgerBtn" aria-label="Abrir Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Navegação Principal -->
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#projetos" class="nav-link">
+                            Projetos <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#projetos" class="dropdown-link">Reflorestamento</a></li>
+                            <li><a href="#projetos" class="dropdown-link">Reciclagem Urbana</a></li>
+                            <li><a href="#projetos" class="dropdown-link">Educação Ambiental</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#impacto" class="nav-link">Nosso Impacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#voluntario" class="nav-link">Voluntariado</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-primary" onclick="openModal()">
+                            <i class="fa-solid fa-heart"></i> Doar Agora
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="container grid-12">
+            <div class="col-6 hero-content">
+                <span class="badge badge-primary">Plataforma de Impacto Social</span>
+                <h1 class="hero-title">Conectando pessoas a causas ambientais transformadoras</h1>
+                <p class="hero-subtitle">
+                    A EcoConecta reúne ONGs, doadores e voluntários para acelerar projetos de preservação, reciclagem e educação no Brasil.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#voluntario" class="btn btn-primary">Seja Voluntário</a>
+                    <a href="#projetos" class="btn btn-secondary">Conhecer Projetos</a>
+                </div>
+            </div>
+            <div class="col-6 hero-image">
+                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80" alt="Voluntários plantando árvore">
+            </div>
+        </div>
+    </section>
+
+    <!-- ALERTA DE SISTEMA (FEEDBACK UI) -->
+    <div class="container" style="margin-top: var(--space-md);">
+        <div class="alert alert-success">
+            <i class="fa-solid fa-circle-check"></i>
+            <span><strong>Campanha de Inverno Ativa!</strong> Meta de plantio atingiu 85% neste mês. Participe!</span>
+        </div>
+    </div>
+
+    <!-- SEÇÃO DE PROJETOS (CARDS + BADGES + PROGRESSO) -->
+    <section class="container" id="projetos" style="padding: var(--space-xl) var(--space-sm);">
+        <div class="section-title">
+            <h2>Projetos em Destaque</h2>
+            <p>Escolha uma causa para apoiar com tempo ou doações</p>
+        </div>
+
+        <div class="grid-12">
+            <!-- Card 1 -->
+            <article class="col-4 card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1511497584788-8767611136f6?auto=format&fit=crop&w=600&q=80" alt="Mata Atlântica">
+                    <span class="badge badge-primary card-tag">Florestas</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Renascer Verde</h3>
+                    <p class="card-description">Reflorestamento de áreas degradadas da Mata Atlântica com espécies nativas.</p>
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Arrecadado: R$ 18.500</span>
+                            <span>74%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 74%;"></div>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" style="width: 100%; margin-top: var(--space-xs);" onclick="openModal()">Apoiar Projeto</button>
+                </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="col-4 card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=600&q=80" alt="Coleta Seletiva">
+                    <span class="badge badge-secondary card-tag">Reciclagem</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Oceanos Sem Plástico</h3>
+                    <p class="card-description">Mutirões de limpeza de praias e conscientização sobre descarte correto de resíduos.</p>
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Arrecadado: R$ 12.000</span>
+                            <span>60%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" style="width: 100%; margin-top: var(--space-xs);" onclick="openModal()">Apoiar Projeto</button>
+                </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="col-4 card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=600&q=80" alt="Educação para Crianças">
+                    <span class="badge badge-accent card-tag">Educação</span>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Escola Ecológica</h3>
+                    <p class="card-description">Aulas de sustentabilidade e criação de hortas comunitárias em escolas públicas.</p>
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Arrecadado: R$ 29.000</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 95%;"></div>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" style="width: 100%; margin-top: var(--space-xs);" onclick="openModal()">Apoiar Projeto</button>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- MÉTRICAS DE IMPACTO -->
+    <section class="metrics-section" id="impacto">
+        <div class="container grid-12">
+            <div class="col-3 metric-card">
+                <div class="metric-number">+50k</div>
+                <div class="metric-label">Árvores Plantadas</div>
+            </div>
+            <div class="col-3 metric-card">
+                <div class="metric-number">120</div>
+                <div class="metric-label">Projetos Apoiados</div>
+            </div>
+            <div class="col-3 metric-card">
+                <div class="metric-number">15k</div>
+                <div class="metric-label">Voluntários Ativos</div>
+            </div>
+            <div class="col-3 metric-card">
+                <div class="metric-number">R$ 2M</div>
+                <div class="metric-label">Recursos Captados</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMULÁRIO DE CADASTRO COM VALIDAÇÃO -->
+    <section class="container" id="voluntario" style="margin-bottom: var(--space-2xl);">
+        <div class="grid-12">
+            <div class="col-8 form-section" style="grid-column-start: 3;">
+                <div class="section-title">
+                    <h2>Seja um Voluntário</h2>
+                    <p>Preencha os dados abaixo para se juntar à nossa rede de transformação.</p>
+                </div>
+
+                <form id="volunteerForm" novalidate>
+                    <div class="form-group">
+                        <label for="fullName" class="form-label">Nome Completo</label>
+                        <input type="text" id="fullName" class="form-control" placeholder="Digite seu nome completo" required>
+                        <span class="error-message">Por favor, insira seu nome completo (mínimo 3 caracteres).</span>
+                    </div>
+
+                    <div class="grid-12">
+                        <div class="col-6 form-group">
+                            <label for="email" class="form-label">E-mail</label>
+                            <input type="email" id="email" class="form-control" placeholder="seuemail@exemplo.com" required>
+                            <span class="error-message">Digite um e-mail válido.</span>
+                        </div>
+
+                        <div class="col-6 form-group">
+                            <label for="area" class="form-label">Área de Interesse</label>
+                            <select id="area" class="form-control" required>
+                                <option value="">Selecione uma opção...</option>
+                                <option value="plantio">Plantio e Campo</option>
+                                <option value="educacao">Educação e Oficinas</option>
+                                <option value="comunicacao">Comunicação e Mídias</option>
+                                <option value="gestao">Gestão de Eventos</option>
+                            </select>
+                            <span class="error-message">Selecione uma área de interesse.</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes" class="form-label">Por que você quer ser voluntário? (Opcional)</label>
+                        <textarea id="notes" class="form-control" rows="4" placeholder="Conte um pouco sobre sua motivação..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--space-sm);">
+                        Cadastrar como Voluntário
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL INTERATIVO (DOAÇÃO) -->
+    <div class="modal-overlay" id="donationModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Faça uma Doação</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <p style="margin-bottom: var(--space-md); color: var(--color-neutral-600);">
+                Sua contribuição ajuda a manter nossos projetos vivos e expandir nossa atuação.
+            </p>
+            <div class="form-group">
+                <label class="form-label">Valor da Doação</label>
+                <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="selectAmount(20)">R$ 20</button>
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="selectAmount(50)">R$ 50</button>
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="selectAmount(100)">R$ 100</button>
+                </div>
+                <input type="number" id="customAmount" class="form-control" placeholder="Outro valor (R$)">
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: var(--space-sm);" onclick="processDonation()">
+                Confirmar Doação
+            </button>
+        </div>
+    </div>
+
+    <!-- TOAST DE NOTIFICAÇÃO -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- RODAPÉ -->
+    <footer class="footer">
+        <div class="container grid-12">
+            <div class="col-4">
+                <a href="#" class="logo" style="color: #fff; margin-bottom: var(--space-sm);">
+                    <i class="fa-solid fa-leaf"></i> EcoConecta
+                </a>
+                <p>Plataforma para gestão, transparência e engajamento em projetos sociais e ambientais em todo o país.</p>
+            </div>
+            <div class="col-4">
+                <h4 class="footer-title">Links Rápidos</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#projetos">Nossos Projetos</a></li>
+                    <li><a href="#impacto">Transparência</a></li>
+                    <li><a href="#voluntario">Trabalhe Conosco</a></li>
+                </ul>
+            </div>
+            <div class="col-4">
+                <h4 class="footer-title">Contato</h4>
+                <p><i class="fa-solid fa-envelope"></i> contato@ecoconecta.org.br</p>
+                <p><i class="fa-solid fa-phone"></i> (11) 4002-8922</p>
+                <div style="display: flex; gap: 12px; margin-top: var(--space-sm); font-size: 1.25rem;">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 EcoConecta. Todos os direitos reservados. Projeto Acadêmico Integrado.</p>
+        </div>
+    </footer>
+
+    <!-- INTERATIVIDADE JS (MENU, MODAL, VALIDAÇÃO E TOASTS) -->
+    <script>
+        // 1. Menu Hambúrguer Mobile
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburgerBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // 2. Modais
+        function openModal() {
+            document.getElementById('donationModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('donationModal').classList.remove('active');
+        }
+
+        function selectAmount(val) {
+            document.getElementById('customAmount').value = val;
+        }
+
+        function processDonation() {
+            const val = document.getElementById('customAmount').value;
+            if(!val || val <= 0) {
+                showToast('Por favor, insira um valor válido!', 'error');
+                return;
+            }
+            closeModal();
+            showToast(`Obrigado! Doação de R$ ${val} recebida com sucesso.`, 'success');
+        }
+
+        // 3. Sistema de Toasts
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <i class="fa-solid ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}" style="color: ${type === 'success' ? 'var(--color-primary-300)' : 'var(--color-accent-500)'}"></i>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3500);
+        }
+
+        // 4. Validação Visual do Formulário
+        const form = document.getElementById('volunteerForm');
+        const fullName = document.getElementById('fullName');
+        const email = document.getElementById('email');
+        const area = document.getElementById('area');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+
+            // Validar Nome
+            if (fullName.value.trim().length < 3) {
+                fullName.classList.add('invalid');
+                fullName.classList.remove('valid');
+                isValid = false;
+            } else {
+                fullName.classList.remove('invalid');
+                fullName.classList.add('valid');
+            }
+
+            // Validar Email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                email.classList.add('invalid');
+                email.classList.remove('valid');
+                isValid = false;
+            } else {
+                email.classList.remove('invalid');
+                email.classList.add('valid');
+            }
+
+            // Validar Área
+            if (area.value === '') {
+                area.classList.add('invalid');
+                area.classList.remove('valid');
+                isValid = false;
+            } else {
+                area.classList.remove('invalid');
+                area.classList.add('valid');
+            }
+
+            if (isValid) {
+                showToast('Cadastro realizado com sucesso! Entraremos em contato.', 'success');
+                form.reset();
+                fullName.classList.remove('valid');
+                email.classList.remove('valid');
+                area.classList.remove('valid');
+            }
+        });
+    </script>
+</body>
+</html>
